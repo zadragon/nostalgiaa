@@ -16,6 +16,11 @@ function App() {
   const toggleShowing = () => setShowing((prev) => !prev);
   const toggleShowing2 = () => setShowing2((prev) => !prev);
 
+  const [album1, setAlbum1] = useState(false);
+  const [album2, setAlbum2] = useState(false);
+  const toggleAlbum1 = () => setAlbum1((prev) => !prev);
+  const toggleAlbum2 = () => setAlbum2((prev) => !prev);
+
   useEffect(() => {
     const header = document.querySelector(".header");
     header.addEventListener("mousemove", (e) => {
@@ -348,23 +353,29 @@ l-215 4 3 -446z m362 313 c121 -19 202 -89 240 -210 42 -131 9 -264 -87 -349
         <section className="artistArea">
           <h2>ARTIST</h2>
           <div class="video-container">
-            <video autoplay muted loop playsinline>
+            {/* <video autoplay muted loop playsinline>
               <source src="./bg.mp4" type="video/mp4" />
-            </video>
+            </video> */}
             <div class="content">
               <div className="artistWrap">
-                <div className="person" onClick={toggleShowing}>
-                  <div className="picture">
+                <div className="person">
+                  <div className="picture" onClick={toggleShowing}>
                     <img src="./images/dane/dane_profile.jpg" alt="dan" />
                   </div>
                   <h3>Dane</h3>
+                  <p>
+                    <span onClick={toggleAlbum1}>album</span> | <span onClick={toggleShowing}>pictures</span>
+                  </p>
                 </div>
 
-                <div className="person" onClick={toggleShowing2}>
-                  <div className="picture">
+                <div className="person">
+                  <div className="picture" onClick={toggleShowing2}>
                     <img src="./images/riaan/riaan_profile.jpg" alt="riaan" />
                   </div>
                   <h3>Riaan</h3>
+                  <p>
+                    <span onClick={toggleAlbum2}>album</span> | <span onClick={toggleShowing2}>pictures</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -405,6 +416,32 @@ l-215 4 3 -446z m362 313 c121 -19 202 -89 240 -210 42 -131 9 -264 -87 -349
         </AnimatePresence>
 
         <AnimatePresence>
+          {album1 ? (
+            <Box variants={boxVariants} initial="initial" animate="visible" exit="leaving">
+              <svg data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="btn-close" onClick={toggleAlbum1}>
+                <path
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
+                ></path>
+              </svg>
+              <Swiper
+                pagination={{
+                  dynamicBullets: true,
+                }}
+                modules={[Pagination]}
+                className="myAlum1"
+              >
+                <SwiperSlide>
+                  <img src="./images/dane/dane_album.png" alt="01" />
+                  <p className="ablumName">Selfie</p>
+                </SwiperSlide>
+              </Swiper>
+            </Box>
+          ) : null}
+        </AnimatePresence>
+
+        <AnimatePresence>
           {showing2 ? (
             <Box variants={boxVariants} initial="initial" animate="visible" exit="leaving">
               <svg data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="btn-close" onClick={toggleShowing2}>
@@ -432,6 +469,42 @@ l-215 4 3 -446z m362 313 c121 -19 202 -89 240 -210 42 -131 9 -264 -87 -349
                 </SwiperSlide>
                 <SwiperSlide>
                   <img src="./images/riaan/riaan04.jpg" alt="01" />
+                </SwiperSlide>
+              </Swiper>
+            </Box>
+          ) : null}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {album2 ? (
+            <Box variants={boxVariants} initial="initial" animate="visible" exit="leaving">
+              <svg
+                data-slot="icon"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                className="btn-close"
+                stroke="white"
+                stroke-width="1.5"
+                onClick={toggleAlbum2}
+              >
+                <path
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
+                ></path>
+              </svg>
+              <Swiper
+                pagination={{
+                  dynamicBullets: true,
+                }}
+                modules={[Pagination]}
+                className="myAlum1"
+              >
+                <SwiperSlide>
+                  <img src="./images/riaan/riaan_album.png" alt="01" />
+                  <p className="ablumName">Treat Me Better</p>
                 </SwiperSlide>
               </Swiper>
             </Box>
@@ -482,7 +555,7 @@ const Box = styled(motion.div)`
   width: 80vw;
   height: 90vh;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
+  border-radius: 25px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -490,6 +563,7 @@ const Box = styled(motion.div)`
   z-index: 100;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   overflow: hidden;
+  box-shadow: 4px 4px 0 #ff5722, /* 빨간 그림자 */ 8px 8px 0 #009688, /* 초록색 그림자 */ 12px 12px 0 #673ab7, /* 보라색 그림자 */ 16px 16px 0 #3f51b5; /* 파란색 그림자 */
   .swiper-slide {
     display: flex;
     justify-content: center; /* 수평 중앙 */

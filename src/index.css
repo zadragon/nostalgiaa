@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
 html,
 body,
@@ -88,7 +89,10 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100, "YTLC" 500;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -411,20 +415,50 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .artistArea h2 {
   font-size: 4.3rem;
   padding-bottom: 50px;
-  font-weight: 500;
+  font-weight: bold;
+  text-shadow: 1px 1px #fff, -1px -1px #ff6347, 1px -1px #2300ff, -1px 1px #32cd32;
 }
+
 .artistWrap {
   width: 100%;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
 }
+
 .artistWrap .person {
+  position: relative;
   cursor: pointer;
+  flex: 1;
+}
+.artistWrap .person img {
+  width: 88%;
+  border-radius: 25px;
+
+  border: 7px solid #000;
+  transition: 1s;
+}
+.artistWrap .person img:hover {
+  border: 7px solid #3333ff;
+  transition: 1s;
+}
+.artistWrap .person p {
+  color: #000;
+}
+.artistWrap .person p span:hover {
+  text-decoration: underline;
+}
+.artistWrap .person h3 {
+  font-size: 2.2rem;
+  padding: 15px 0 10px;
+  color: #000;
+  text-shadow: 1px 1px #fff, -1px -1px #ff6347, 1px -1px #2300ff, -1px 1px #32cd32;
+  text-decoration: underline;
 }
 .artistWrap .person .picture {
   position: relative;
@@ -436,16 +470,70 @@ body {
   opacity: 1;
   transition: 0.6s;
 }
+.ablumName {
+  position: absolute;
+  color: #fff;
+  top: 45%;
+  left: 50%;
+  font-weight: bold;
+  font-size: 3rem;
+  text-shadow: 1px 1px #fff, -1px -1px #ff6347, 1px -1px #2300ff, -1px 1px #32cd32;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+/* 화면이 768px 이하일 때 적용 */
+@media (max-width: 768px) {
+  .artistArea {
+    padding-top: 100px;
+    /* height: 100vh; */
 
-.artistWrap .person img {
-  width: 50vw;
-  height: auto;
-  object-fit: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .artistArea h2 {
+    font-size: 2.2rem;
+    padding-bottom: 50px;
+    font-weight: 500;
+  }
+  .artistWrap {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .artistWrap .person {
+    cursor: pointer;
+  }
+  .artistWrap .person .picture {
+    position: relative;
+    left: 100px;
+    opacity: 0;
+  }
+
+  .artistWrap .person .picture.fade-in {
+    left: 0;
+    opacity: 1;
+    transition: 0.6s;
+  }
+
+  .artistWrap .person img {
+    width: 70vw;
+    height: auto;
+    object-fit: cover;
+  }
+  .artistWrap .person p {
+    padding-bottom: 30px;
+  }
+
+  .artistWrap .person h3 {
+    padding: 15px 0 10px;
+    font-size: 1.6rem;
+  }
 }
-.artistWrap .person h3 {
-  padding: 15px 0 30px;
-  font-size: 2rem;
-}
+
 .video-container {
   position: relative;
   /* height: 100vh; */
