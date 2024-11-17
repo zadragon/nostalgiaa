@@ -10,6 +10,15 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper/modules";
 
+window.addEventListener("scroll", () => {
+  const header = document.querySelector("header");
+  if (window.scrollY > 100) {
+    header.classList.add("fade-in");
+  } else {
+    header.classList.remove("fade-in");
+  }
+});
+
 function App() {
   const [showing, setShowing] = useState(false);
   const [showing2, setShowing2] = useState(false);
@@ -32,10 +41,10 @@ function App() {
       document.querySelector("#circle-1").style.transform = `translate(${xRelativeToHeader * -25}px, ${yRelativeToHeader * -25}px)`;
       document.querySelector("#circle-2").style.transform = `translate(${xRelativeToHeader * 25}px, ${yRelativeToHeader * 25}px)`;
 
-      document.querySelector("#cube__image_1").style.transform = `translate(${xRelativeToHeader * -15}px, ${yRelativeToHeader * -15}px)`;
-      document.querySelector("#cube__image_2").style.transform = `translate(${xRelativeToHeader * -8}px, ${yRelativeToHeader * -8}px)`;
-      document.querySelector("#cube__image_3").style.transform = `translate(${xRelativeToHeader * -20}px, ${yRelativeToHeader * -20}px)`;
-      document.querySelector("#cube__image_4").style.transform = `translate(${xRelativeToHeader * 5}px, ${yRelativeToHeader * 5}px)`;
+      // document.querySelector("#cube__image_1").style.transform = `translate(${xRelativeToHeader * -15}px, ${yRelativeToHeader * -15}px)`;
+      // document.querySelector("#cube__image_2").style.transform = `translate(${xRelativeToHeader * -8}px, ${yRelativeToHeader * -8}px)`;
+      // document.querySelector("#cube__image_3").style.transform = `translate(${xRelativeToHeader * -20}px, ${yRelativeToHeader * -20}px)`;
+      // document.querySelector("#cube__image_4").style.transform = `translate(${xRelativeToHeader * 5}px, ${yRelativeToHeader * 5}px)`;
     });
   }, []);
 
@@ -57,16 +66,53 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const company1 = document.querySelectorAll(".company_01");
+    const observer1 = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in");
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const company2 = document.querySelectorAll(".company_02");
+    const observer2 = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in");
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    company1.forEach((item) => observer1.observe(item));
+    company2.forEach((item) => observer2.observe(item));
+
+    return () => {
+      observer1.disconnect();
+      observer2.disconnect();
+    };
+  }, []);
+
   return (
     <div className="App">
+      <header>
+        <img src="/images/common/logo.png" />
+      </header>
       <div>
         <section className="header">
           <span className="circle" id="circle-1"></span>
           <span className="circle" id="circle-2"></span>
-          <img id="cube__image_1" src="./images/common/cube.png" alt="cube image1" className="cube__image" />
+          {/* <img id="cube__image_1" src="./images/common/cube.png" alt="cube image1" className="cube__image" />
           <img id="cube__image_2" src="./images/common/cube.png" alt="cube image2" className="cube__image" />
           <img id="cube__image_3" src="./images/common/cube.png" alt="cube image3" className="cube__image" />
-          <img id="cube__image_4" src="./images/common/cube.png" alt="cube image4" className="cube__image" />
+          <img id="cube__image_4" src="./images/common/cube.png" alt="cube image4" className="cube__image" /> */}
           <h1 className="header__title">
             <Svg version="1.0" viewBox="0 0 3969.000000 1338.000000">
               <g transform="translate(0.000000,1338.000000) scale(0.100000,-0.100000)" fill="rgba(0, 0, 0, 1)" stroke="rgba(0, 0, 0, 1)">
@@ -512,10 +558,10 @@ l-215 4 3 -446z m362 313 c121 -19 202 -89 240 -210 42 -131 9 -264 -87 -349
         </AnimatePresence>
 
         <section className="company">
-          <div>
+          <div className="company_01">
             <img src="./images/common/logo.png" alt="nostelgia" />
           </div>
-          <article>
+          <article className="company_02">
             Nostalgiaa Records는, 15년간 K-POP 프로듀서로 활동하며 글로벌 스타 ‘JACKSON WANG’의 솔로 커리어,
             <br />
             그리고 그의 레이블 ‘TEAM WANG’의 런칭과 성장을 함께 한 프로듀서 ‘BOYTOY’ 의 프로듀싱 노하우와 인프라를
@@ -563,7 +609,7 @@ const Box = styled(motion.div)`
   z-index: 100;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  box-shadow: 4px 4px 0 #ff5722, /* 빨간 그림자 */ 8px 8px 0 #009688, /* 초록색 그림자 */ 12px 12px 0 #673ab7, /* 보라색 그림자 */ 16px 16px 0 #3f51b5; /* 파란색 그림자 */
+  border: 5px solid #fff;
   .swiper-slide {
     display: flex;
     justify-content: center; /* 수평 중앙 */
